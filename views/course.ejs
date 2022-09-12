@@ -1,0 +1,138 @@
+<%- include('partials/_header.ejs') %> 
+<body class="host_version"> 
+
+    
+
+    <!-- Start header -->
+	<header class="top-navbar">
+		<%- include('partials/_navbar.ejs') %> 
+	</header>
+	<!-- End header -->
+
+	
+	
+	<div class="all-title-box">
+		<div class="container text-center">
+			<h1><%= course.title %><span class="m_1">Lorem Ipsum dolroin gravida nibh vel velit.</span></h1>
+		</div>
+	</div>
+	
+    <div id="overviews" class="section wb">
+        <div class="container">
+            <div class="row"> 
+                <div class="col-lg-9 blog-post-single">
+                    <div class="blog-item">
+						<div class="image-blog">
+							<img src="<%= course.image %> " alt="" class="img-fluid">
+						</div>
+						
+						<div class="post-content">
+							<div class="post-date">
+								<% if (!(user.courses.includes(course._id)) && user.role !== 'teacher' && user.role !== 'admin') { %>
+									<form action="/courses/enroll" method="post">
+										<input type="hidden" name="course_id" value="<%= course._id %>">
+										<button class="btn btn-lg btn-warning text-white"><span>ENROLL</span></button>
+									</form>
+								<% } %>
+								<% if ((user.courses.includes(course._id))) { %>
+									<form action="/courses/enroll" method="post">
+										<input type="hidden" name="course_id" value="<%= course._id %>">
+										<a href="/courses/<%= course.slug %>?_method=DELETE " onclick="return confirm('Kursu silmek istediğine emin misin ? \n <%= course.title %> ')" style="float: right;" class="btn btn-danger text-white rounded-0"> <span>DELETE</span> </a>
+									</form>
+								<% } %>
+								<% if (user.role == 'teacher') { %>
+									<form action="/courses/enroll" method="post">
+										<a href="/users/dashboard"  style="float: right;" class="btn btn-primary text-white rounded-2"> <span>Yönet</span> </a>
+									</form>
+								<% } %>
+
+								
+							</div>
+							<div class="meta-info-blog">
+								<span><i class="fa fa-calendar" ></i> <a href="#" id="date"><%= datenow %> </a> </span>
+							</div>
+							<div class="blog-title">
+								<h2><a href="#" title=""><%= course.title %> </a></h2>
+							</div>
+							<div class="blog-desc">
+								<blockquote class="default">
+									<%- course.description %> 
+								</blockquote>
+							</div>							
+						</div>
+					</div>
+					<div class="blog-author">
+						<div class="author-bio">
+							<% if (course.user) { %>
+								<h3 class="author_name"><a href="#"> <%= course.user.name %> </a></h3>
+							<% } %>
+							<% if (!course.user) { %>
+								<h3 class="author_name"><a href="#"> Teacher name ! </a></h3>
+							<% } %>
+							
+							<h5>CEO at <a href="#">Odemy</a></h5>
+							<p class="author_det">
+								Lorem ipsum dolor sit amet, consectetur adip, sed do eiusmod tempor incididunt  ut aut reiciendise voluptat maiores alias consequaturs aut perferendis doloribus omnis saperet docendi nec, eos ea alii molestiae aliquand.
+							</p>
+						</div>
+						<div class="author-desc">
+							<% if (course.user) { %>
+								<img src="<%= course.user.image %> " alt="about author">
+							<% } %>
+							<ul class="author-social">
+								<li><a href="#"><i class="fa fa-facebook"></i></a></li>
+								<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+								<li><a href="#"><i class="fa fa-skype"></i></a></li>
+							</ul>
+						</div>
+					</div>
+					
+                </div><!-- end col -->
+				<div class="col-lg-3 col-12 right-single">
+					<div class="widget-search">
+						<div class="site-search-area">
+							<form method="get" id="site-searchform" action="#">
+								<div>
+									<input class="input-text form-control" name="search-k" id="search-k" placeholder="Search keywords..." type="text">
+									<input id="searchsubmit" value="Search" type="submit">
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="widget-categories">
+						<h3 class="widget-title">Categories</h3>
+						<ul>
+							<li><a href="/courses">all Courses </a></li>
+							<% categories.forEach(category => { %>
+								<li><a href="/courses?category=<%= category.slug %> "><%= category.title %> </a></li>
+							<% }) %>
+						</ul>
+					</div>
+				</div>
+            </div><!-- end row -->
+        </div><!-- end container -->
+    </div><!-- end section -->
+
+	<footer class="footer">
+        <%- include('partials/_footer.ejs') %> 
+    </footer><!-- end footer -->
+
+    <div class="copyrights">
+        <div class="container">
+            <div class="footer-distributed">
+                <div class="footer-center">                   
+                    <p class="footer-company-name">All Rights Reserved. &copy; 2022 <a href="#">Odemy</a> </p>
+                </div>
+            </div>
+        </div><!-- end container -->
+    </div><!-- end copyrights -->
+
+    <a href="#" id="scroll-to-top" class="dmtop global-radius"><i class="fa fa-angle-up"></i></a>
+
+    <!-- ALL JS FILES -->
+    <script src="js/all.js"></script>
+    <!-- ALL PLUGINS -->
+    <script src="js/custom.js"></script>
+
+</body>
+</html>

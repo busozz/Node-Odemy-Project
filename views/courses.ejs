@@ -1,0 +1,126 @@
+<%- include('partials/_header.ejs') %> 
+<body class="host_version"> 
+
+    
+
+    <!-- Start header -->
+	<header class="top-navbar">
+		<%- include('partials/_navbar.ejs') %> 
+	</header>
+	<!-- End header -->
+	
+	<div class="all-title-box">
+		<div class="container text-center">
+			<h1>Kurslar<span class="m_1">Lorem Ipsum dolroin gravida nibh vel velit.</span></h1>
+		</div>
+	</div>
+	
+	
+    <div id="overviews" class="section wb">
+        <div class="container">
+            <div class="row"> 
+                <div class="col-lg-9 blog-post-single">
+					<% if (flashMessages) { %>
+						
+							<% if (flashMessages.success) { %>
+								<div class="alert alert-success"><h2> Kurs oluşturldu : </h2><%= flashMessages.success %> </div>
+							<% } %>
+							<% if (flashMessages.error) { %>
+								<div class="alert alert-danger">asdas<%= flashMessages.error %> </div>
+							<% } %>
+						
+						<% } %>
+						
+				            <div class="row"> 
+
+			<% courses.forEach(course => { %>
+			 
+				<div class="col-lg-6 col-md-6 col-12">
+                    <div class="course-item mb-5">
+						<div class="image-blog">
+							<img src="<%= course.image %> " alt="" class="img-fluid">
+						</div>
+						<div class="course-br">
+							<div class="course-title">
+								<h2><a href="/courses/<%= course.slug %> " title=""><%= course.title %> </a></h2>
+							</div>
+							<div class="course-desc">
+								<% if (course.description.length > 100) { %>
+									<p><% course.description.substring(0,100) + " ..." %></p>
+									<label>Read More</label>
+								<% } else if(course.description.length < 100) { %>
+								<p><%- course.description %></p>
+								<label>Read More</label>
+								<% } %> 
+							</div>
+						</div>
+						
+						<div class="course-meta-bot">
+							<ul>
+								<% if (course.user) { %>
+										<li><i class="fa fa-user" aria-hidden="true"></i> <%= course.user.name %>  </li>
+								<% } %>
+								<% if (!course.user) { %>
+									<li><i class="fa fa-user" aria-hidden="true"></i> Teacher Name  </li>
+								<% } %>
+								 
+							</ul>
+						</div>
+					</div>
+                </div><!-- end col -->
+
+			<% }) %>
+                
+
+            </div><!-- end row -->
+					
+                </div><!-- end col -->
+				<div class="col-lg-3 col-12 right-single">
+					<div class="widget-search">
+						<div class="site-search-area">
+							<form method="get" id="site-searchform" action="#">
+								<div>
+									<input class="input-text form-control" name="search" id="search-k" placeholder="Anahtar Kelime Ara..." type="text">
+									<button id="searchsubmit" value="Search" type="submit"> </button>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="widget-categories">
+						<h3 class="widget-title active">Categories</h3>
+						<ul>
+							<li><a href="/courses">all Courses </a></li>
+							<% categories.forEach(category => { %>
+								<li><a href="/courses?category=<%= category.slug %> "><%= category.title %> </a></li>
+							<% }) %>
+						</ul>
+					</div>
+				</div>
+            </div><!-- end row -->
+        </div><!-- end container -->
+    </div><!-- end section -->
+
+
+	<footer class="footer">
+        <%- include('partials/_footer.ejs') %> 
+    </footer><!-- end footer -->
+
+    <div class="copyrights">
+        <div class="container">
+            <div class="footer-distributed">
+                <div class="footer-center">                   
+                    <p class="footer-company-name">All Rights Reserved. &copy; 2022 <a href="#">Odemy</a> </p>
+                </div>
+            </div>
+        </div><!-- end container -->
+    </div><!-- end copyrights -->
+
+    <a href="#" id="scroll-to-top" class="dmtop global-radius"><i class="fa fa-angle-up"></i></a>
+
+    <!-- ALL JS FILES -->
+    <script src="js/all.js"></script>
+    <!-- ALL PLUGINS -->
+    <script src="js/custom.js"></script>
+
+</body>
+</html>
